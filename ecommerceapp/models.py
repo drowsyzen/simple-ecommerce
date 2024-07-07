@@ -23,6 +23,7 @@ class ProductMstModel(BaseModel):
     desc = models.CharField(max_length=1000,verbose_name="Product Desc")
     price = models.CharField(max_length=1000,verbose_name="Price")
     category = models.CharField(max_length=1000,verbose_name="Product Category")
+    quantity = models.IntegerField()
     
     def __str__(self):
         return self.desc
