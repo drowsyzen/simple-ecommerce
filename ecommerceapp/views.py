@@ -80,4 +80,13 @@ def registerUser(request):
 
     return Response(output_json)
 
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def editUserDetails(request):
 
+    user_data = request.data
+
+    output_json = edit_user(user_data)
+
+    return Response(output_json)

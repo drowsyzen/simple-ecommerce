@@ -20,7 +20,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from ecommerceapp.views import registerUser
+from ecommerceapp.views import registerUser,editUserDetails
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('ecom/', include("ecommerceapp.urls")),
     path('register/', registerUser, name="Register User"),
+    path('edituserdetails/', editUserDetails, name="Edit User Details"),
 ]

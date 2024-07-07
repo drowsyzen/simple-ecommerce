@@ -1,7 +1,7 @@
 from ecommerceapp.serializers import ProductSerializer,AllProductSerializer,RegisterSerializer
 from ecommerceapp.models import ProductMstModel
 from rest_framework import status
-
+from django.contrib.auth.models import User
 
 def get_all_products():
     
@@ -70,4 +70,23 @@ def register_user(data):
         return new_user_obj.data,"",""
     return new_user_obj.errors,"Some error while adding new User","400"
 
+def edit_user(data,user):
 
+    usr_obj = User.objects.filter(id = user.id)
+    if usr_obj:
+        new_user_obj = RegisterSerializer(instance=usr_obj,data=data, partial = True)
+        if new_user_obj.is_valid():
+            new_user_obj.save()
+            return new_user_obj.data,"",""
+    return new_user_obj.errors,"Some error while aditing User","400"
+
+def delete_user(user):
+    # right now user can only delete self account 
+    # no admin access delete logic
+
+    usr_obj = User.objects.filter(id = user.id)
+    if usr_obj:
+        usr_obj.delete()
+        return usr_obj,"User delete successfully",""
+    
+    return "","Some error while deleting User","400"
