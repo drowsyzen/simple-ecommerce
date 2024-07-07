@@ -26,8 +26,9 @@ def get_product_detail(product_id):
         return {},"No Product found for this id",400
     
 
-def createNewProduct(data):
+def createNewProduct(data,user):
 
+    data.user = user.id
     new_product_obj = ProductSerializer(data=data)
 
     if new_product_obj.is_valid():
@@ -48,4 +49,18 @@ def edit_product(product_id,data):
     else:
         error_data = updated_obj.errors 
         return error_data,"Invalid details",""
+    
+
+def delete_product(product_id):
+
+    product_obj = ProductMstModel.objects.filter(status=1,id=product_id)
+    
+    if product_obj:
+        product_obj.delete()
+        return product_obj.data,status.HTTP_201_CREATED
+    else:
+        error_data = product_obj.errors 
+        return "","Error while deleting Product.",""
+    
+
     
