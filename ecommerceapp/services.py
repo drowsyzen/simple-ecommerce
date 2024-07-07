@@ -1,7 +1,6 @@
-from ecommerceapp.serializers import ProductSerializer,AllProductSerializer
+from ecommerceapp.serializers import ProductSerializer,AllProductSerializer,RegisterSerializer
 from ecommerceapp.models import ProductMstModel
 from rest_framework import status
-
 
 
 def get_all_products():
@@ -57,10 +56,18 @@ def delete_product(product_id):
     
     if product_obj:
         product_obj.delete()
-        return product_obj.data,status.HTTP_201_CREATED
+        return product_obj.data,"",status.HTTP_201_CREATED
     else:
         error_data = product_obj.errors 
         return "","Error while deleting Product.",""
     
 
     
+def register_user(data):
+    new_user_obj = RegisterSerializer(data=data)
+    if new_user_obj.is_valid():
+        new_user_obj.save()
+        return new_user_obj.data,"",""
+    return new_user_obj.errors,"Some error while adding new User","400"
+
+

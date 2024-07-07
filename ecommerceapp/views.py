@@ -69,3 +69,15 @@ def deleteProduct(request,product_id):
 
     return Response(output_json)
 
+
+@csrf_exempt
+@api_view(['POST'])
+def registerUser(request):
+
+    user_data = request.data
+
+    output_json = register_user(user_data)
+
+    return Response(output_json)
+
+
